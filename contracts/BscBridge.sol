@@ -14,8 +14,6 @@ contract BscBridge is AccessControl {
 
     using SafeERC20 for IERC20;
 
-    address public token;
-
     event SwappedFromBsc(address indexed token, address indexed from, uint256 amount);
     event AcceptedSwapFromBsc(address indexed token, address indexed from, uint256 amount);
 

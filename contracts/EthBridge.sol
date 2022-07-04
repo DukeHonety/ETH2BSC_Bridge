@@ -10,8 +10,6 @@ contract EthBridge is AccessControl {
 
     using SafeERC20 for IERC20;
 
-    address public token;
-
     event SwappedFromEth(address indexed token, address indexed from, uint256 amount);
     event AcceptedSwapFromBsc(address indexed token, address indexed from, uint256 amount);
 
@@ -23,7 +21,7 @@ contract EthBridge is AccessControl {
         require(msg.sender != address(0), "ZERO_ADDRESS");
         require(_token != address(0), "ZERO_ADDRESS");
         require(_amount > 0, "ZERO_AMOUNT");
-        IERC20(token).safeTransferFrom(msg.sender, address(this), _amount);
+        IERC20(_token).safeTransferFrom(msg.sender, address(this), _amount);
         emit SwappedFromEth(_token, msg.sender, _amount);
     }
 
@@ -32,7 +30,7 @@ contract EthBridge is AccessControl {
         require(_from != address(0), "ZERO_ADDRESS");
         require(_token != address(0), "ZERO_ADDRESS");
         require(_amount > 0, "ZERO_AMOUNT");
-        IERC20(token).safeTransfer(_from, _amount);
+        IERC20(_token).safeTransfer(_from, _amount);
         emit AcceptedSwapFromBsc(_token, _from, _amount);
     }
 }

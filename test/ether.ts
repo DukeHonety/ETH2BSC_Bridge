@@ -19,14 +19,14 @@ describe("Seasonal Bridge Test eth network", () => {
       console.log("springToken address: ", springToken.address);
       console.log(
         "springToken verify: ",
-        `npx hardhat verify --contract "contracts/Spring.sol:Spring" --network hardhat ${springToken.address} ${admin.address}`
+        `npx hardhat verify --contract "contracts/Spring.sol:Spring" --network rinkeby ${springToken.address} ${admin.address}`
       );
       Token = await ethers.getContractFactory("EthBridge");
       ethBridgeContract = await Token.deploy(admin.address);
       console.log("ethBridgeContract address: ", ethBridgeContract.address);
       console.log(
         "ethBridgeContract verify: ",
-        `npx hardhat verify --contract "contracts/EthBridge.sol:EthBridge" --network hardhat ${ethBridgeContract.address} ${admin.address}`
+        `npx hardhat verify --contract "contracts/EthBridge.sol:EthBridge" --network rinkeby ${ethBridgeContract.address} ${admin.address}`
       );
     });
   });
@@ -60,7 +60,7 @@ describe("Seasonal Bridge Test eth network", () => {
     it("Should swap spring token from eth", async () => {
       const tx = await ethBridgeContract
         .connect(deployer)
-        .swapFromEth(springToken.address, "1000000000000000000");
+        .swapFromEth(springToken.address, "10000000000000000000");
       await tx.wait();
     });
   });
