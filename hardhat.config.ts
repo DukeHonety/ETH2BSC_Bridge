@@ -64,8 +64,14 @@ const config: HardhatUserConfig = {
     currency: "USD",
   },
   etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY,
+    apiKey: {
+      // @ts-ignore
+      rinkeby: process.env.ETHERSCAN_API_KEY,
+      // @ts-ignore
+      bscTestnet: process.env.BSCSCAN_API_KEY,
+    },
   },
+  
 };
 
 export default config;

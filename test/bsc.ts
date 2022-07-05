@@ -30,37 +30,5 @@ describe("Seasonal Bridge Bsc test network", () => {
       );
     });
   });
-  describe("Spring Token Mint", () => {
-    it("Should mint tokens between accounts", async () => {
-      let tx = await springToken
-        .connect(admin)
-        .mint(deployer.address, "100000000000000000000000000000000000000000");
-      await tx.wait();
-      tx = await springToken
-        .connect(admin)
-        .mint(admin.address, "100000000000000000000000000000000000000000");
-      await tx.wait();
-    });
-  });
-  describe("Approve Spring Token to BscBridge", () => {
-    it("Should approve spring token to bscBridge", async () => {
-      const tx = await springToken
-        .connect(deployer)
-        .approve(
-          bscBridgeContract.address,
-          "100000000000000000000000000000000000000000"
-        );
-      await tx.wait();
-    });
-  });
-
-  describe("Swap Spring Token from BSC", () => {
-    it("Should swap spring token from bsc", async () => {
-      const tx = await bscBridgeContract
-        .connect(deployer)
-        .swapFromBsc(springToken.address, "1000000000000000000");
-      await tx.wait();
-    });
-  });
 
 });

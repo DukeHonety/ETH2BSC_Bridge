@@ -14,8 +14,10 @@ describe("Seasonal Bridge Test eth network", () => {
       [deployer, admin] = await ethers.getSigners();  //??
       console.log("deployer: ", deployer.address);
       console.log("admin: ", admin.address);
+
       Token = await ethers.getContractFactory("Spring");
       springToken = await Token.deploy(admin.address);
+      
       console.log("springToken address: ", springToken.address);
       console.log(
         "springToken verify: ",
