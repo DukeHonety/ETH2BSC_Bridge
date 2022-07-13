@@ -14,22 +14,26 @@ contract BscBridge is AccessControl {
 
     using SafeERC20 for IERC20;
 
+    uint256 minAmount = 100 ether;
+
     event SwappedFromBsc(address indexed token, address indexed from, uint256 amount);
-    event AcceptedSwapFromEth(address indexed token, address indexed from, uint256 amount);
+    event AcceptedSwapFromBsc(address indexed token, address indexed from, uint256 amount);
 
     constructor(address _admin) {
         _setupRole(DEFAULT_ADMIN_ROLE, _admin);
     }
 
-    receive() external payable{
-        
-    }
-
     function swapFromBsc(address _token, uint256 _amount) external {
         require(msg.sender != address(0), "ZERO_ADDRESS");
         require(_token != address(0), "ZERO_ADDRESS");
-        require(_amount > 0, "ZERO_AMOUNT");
+        require(_amount >= minAmount, "TOO_SMALL_AMOUNT");
         IBurnable(_token).burnFrom(msg.sender, _amount);
         emit SwappedFromBsc(_token, msg.sender, _amount);
     }
+
+    function updateMinAmount(uint256 _minAmount) external {
+        require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "Caller is not a admin");
+        minAmount = _minAmount;
+    }
+
 }
